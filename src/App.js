@@ -3,6 +3,7 @@ import ListContacts from './ListContacts';
 
 
 class App extends Component {
+
     // test contact array state property (hardcoded)
     state = {
         contacts: [
@@ -26,10 +27,18 @@ class App extends Component {
             }
         ]
     };
+
+    removeContact = (contact) => {
+        // Since the app depends on the previous state use a functions instead of an object for setState
+        this.setState((state) => ({
+            contacts: state.contacts.filter((c) => c.id !== contact.id)
+        }))
+    };
+
     render() {
         return (
             <div>
-                <ListContacts contacts={this.state.contacts} />
+                <ListContacts onDeleteContact={this.removeContact} contacts={this.state.contacts} />
             </div>
         )
     }
