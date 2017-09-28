@@ -1,32 +1,21 @@
 import React, {Component} from 'react';
 import ListContacts from './ListContacts';
-
+import * as ContactsAPI from './utils/ContactsAPI';
 
 class App extends Component {
 
-    // test contact array state property (hardcoded)
     state = {
-        contacts: [
-            {
-                "id": "ryan",
-                "name": "Ryan Florence",
-                "email": "ryan@reacttraining.com",
-                "avatarURL": "http://localhost:5001/ryan.jpg"
-            },
-            {
-                "id": "michael",
-                "name": "Michael Jackson",
-                "email": "michael@reacttraining.com",
-                "avatarURL": "http://localhost:5001/michael.jpg"
-            },
-            {
-                "id": "tyler",
-                "name": "Tyler McGinnis",
-                "email": "tyler@reacttraining.com",
-                "avatarURL": "http://localhost:5001/tyler.jpg"
-            }
-        ]
+        contacts: []
     };
+
+    /*
+     * Lifecycle event handler Called jujst after the App loads into the DOM
+     */
+    componentDidMount() {
+        ContactsAPI.getAll().then((contacts) => {
+            this.setState({ contacts })
+        })
+    }
 
     removeContact = (contact) => {
         // Since the app depends on the previous state use a functions instead of an object for setState
