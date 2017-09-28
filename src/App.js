@@ -18,10 +18,14 @@ class App extends Component {
     }
 
     removeContact = (contact) => {
+        // Remove the contact from the UI
         // Since the app depends on the previous state use a functions instead of an object for setState
         this.setState((state) => ({
             contacts: state.contacts.filter((c) => c.id !== contact.id)
         }))
+
+        // Remove the contact from remote server
+        ContactsAPI.remove(contact);
     };
 
     render() {
