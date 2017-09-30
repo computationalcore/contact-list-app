@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { Route } from 'react-router-dom';
+import CreateContact from './CreateContact';
 import ListContacts from './ListContacts';
 import * as ContactsAPI from './utils/ContactsAPI';
 
@@ -22,7 +24,7 @@ class App extends Component {
         // Since the app depends on the previous state use a functions instead of an object for setState
         this.setState((state) => ({
             contacts: state.contacts.filter((c) => c.id !== contact.id)
-        }))
+        }));
 
         // Remove the contact from remote server
         ContactsAPI.remove(contact);
@@ -31,7 +33,13 @@ class App extends Component {
     render() {
         return (
             <div>
-                <ListContacts onDeleteContact={this.removeContact} contacts={this.state.contacts} />
+                <Route exact path='/' render={() => (
+                    <ListContacts
+                        onDeleteContact={this.removeContact}
+                        contacts={this.state.contacts}
+                    />
+                )}/>
+                <Route path='/create' component={CreateContact}/>
             </div>
         )
     }
